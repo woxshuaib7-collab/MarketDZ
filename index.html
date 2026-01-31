@@ -107,20 +107,27 @@
         </div>
     </div>
 
-        <div id="orderModal">
-        <div class="modal-content">
-            <h3 id="mTitle" style="color:var(--primary);">تأكيد الطلب</h3>
+            <div id="orderModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; overflow-y: auto;">
+        <div class="modal-content" style="background: #1a222d; width: 90%; max-width: 450px; margin: 40px auto; padding: 25px; border-radius: 20px; border: 1px solid var(--primary); text-align: right;">
+            <h3 id="mTitle" style="color:var(--primary); margin-top: 0;">تأكيد الطلب</h3>
+            <p id="mPrice" style="color: #4ade80; font-weight: bold;"></p>
             
-            <div style="background: #2d343f; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px dashed var(--primary); text-align: center;">
-                <p style="margin: 0; font-size: 0.9em; color: #ccc;">يرجى دفع المبلغ إلى حساب بريدي موب التالي:</p>
+            <div style="background: #2d343f; padding: 12px; border-radius: 10px; margin-bottom: 15px; border: 1px dashed var(--primary); text-align: center;">
+                <p style="margin: 0; font-size: 0.85em; color: #ccc;">أرسل المبلغ إلى حساب بريدي موب:</p>
                 <p style="margin: 5px 0; font-weight: bold; font-size: 1.1em; color: #fff; letter-spacing: 1px;">0079999900XXXXXXXXXX</p>
-                <p style="margin: 0; font-size: 0.8em; color: #fbbf24;">(يرجى تصوير الوصل بعد الدفع)</p>
+                <p style="margin: 0; font-size: 0.75em; color: #fbbf24;">(يجب رفع صورة الوصل بالأسفل لتأكيد طلبك)</p>
             </div>
 
-            <textarea id="accInfo" rows="4" placeholder="أدخل ID اللاعب أو الجيميل والباسورد هنا..."></textarea>
-            <input type="file" id="receiptImg" accept="image/*">
-            <button class="btn" id="sendBtn" onclick="sendToTelegram()">إرسال الطلب ✅</button>
-            <button class="btn" onclick="document.getElementById('orderModal').style.display='none'" style="background:transparent; color:gray; margin-top:10px;">إلغاء</button>
+            <label style="display: block; margin-bottom: 5px;">بيانات الحساب المطلوبة:</label>
+            <textarea id="accInfo" rows="4" style="width:100%; background:#0b1016; color:white; border:1px solid #334155; border-radius:10px; padding:10px;" placeholder="للألعاب: أدخل الـ ID.. للاشتراكات: أدخل الجيميل والباسورد"></textarea>
+
+            <div style="margin-top: 15px;">
+                <label style="display: block; margin-bottom: 5px;">ارفع صورة وصل الدفع (بريدي موب/CCP):</label>
+                <input type="file" id="receiptImg" accept="image/*" style="width:100%; color:white;">
+            </div>
+
+            <button class="btn" id="sendBtn" onclick="sendToTelegram()" style="margin-top: 20px; background:var(--primary); color:white; border:none; padding:12px; width:100%; border-radius:10px; cursor:pointer; font-weight:bold;">إرسال الطلب ✅</button>
+            <button onclick="document.getElementById('orderModal').style.display='none'" style="background:transparent; color:gray; border:none; width:100%; margin-top:10px; cursor:pointer;">إلغاء</button>
         </div>
     </div>
 
@@ -170,11 +177,10 @@ OneSignal.push(function() {
         }
 
         function openModal(prod, price) {
-            currentProduct = prod;
-            document.getElementById('mTitle').innerText = prod;
-            document.getElementById('mPrice').innerText = price;
-            document.getElementById('orderModal').style.display = 'block';
-        }
+    document.getElementById('mTitle').innerText = prod;
+    document.getElementById('mPrice').innerText = price;
+    document.getElementById('orderModal').style.display = 'block';
+}
 
         async function sendToTelegram() {
             const user = JSON.parse(localStorage.getItem('marketUser'));
