@@ -107,22 +107,20 @@
         </div>
     </div>
 
-    <div id="orderModal">
+        <div id="orderModal">
         <div class="modal-content">
-            <h3 id="mTitle" style="color:var(--primary); margin-top: 0;">تأكيد الطلب</h3>
-            <p id="mPrice" style="color: var(--success); font-weight: bold;"></p>
+            <h3 id="mTitle" style="color:var(--primary);">تأكيد الطلب</h3>
             
-            <label>بيانات الحساب المطلوبة:</label>
-            <textarea id="accInfo" rows="4" placeholder="للألعاب: أدخل الـ ID.. للاشتراكات: أدخل الجيميل والباسورد"></textarea>
-            <span class="hint">تأكد من كتابة البيانات بدقة لتفادي التأخير</span>
-
-            <div style="margin-top: 15px;">
-                <label>ارفع صورة وصل الدفع (بريدي موب/CCP):</label>
-                <input type="file" id="receiptImg" accept="image/*" style="margin-top: 5px;">
+            <div style="background: #2d343f; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px dashed var(--primary); text-align: center;">
+                <p style="margin: 0; font-size: 0.9em; color: #ccc;">يرجى دفع المبلغ إلى حساب بريدي موب التالي:</p>
+                <p style="margin: 5px 0; font-weight: bold; font-size: 1.1em; color: #fff; letter-spacing: 1px;">0079999900XXXXXXXXXX</p>
+                <p style="margin: 0; font-size: 0.8em; color: #fbbf24;">(يرجى تصوير الوصل بعد الدفع)</p>
             </div>
 
-            <button class="btn" id="sendBtn" onclick="sendToTelegram()" style="margin-top: 20px;">إرسال الطلب للبائع ✅</button>
-            <button class="btn" onclick="document.getElementById('orderModal').style.display='none'" style="background:transparent; color: #94a3b8; margin-top: 10px; border: 1px solid #334155;">إلغاء</button>
+            <textarea id="accInfo" rows="4" placeholder="أدخل ID اللاعب أو الجيميل والباسورد هنا..."></textarea>
+            <input type="file" id="receiptImg" accept="image/*">
+            <button class="btn" id="sendBtn" onclick="sendToTelegram()">إرسال الطلب ✅</button>
+            <button class="btn" onclick="document.getElementById('orderModal').style.display='none'" style="background:transparent; color:gray; margin-top:10px;">إلغاء</button>
         </div>
     </div>
 
