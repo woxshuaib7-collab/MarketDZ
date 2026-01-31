@@ -4,19 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Market Store DZ | المتجر المتكامل</title>
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script>
-  window.OneSignal = window.OneSignal || [];
-  OneSignal.push(function() {
-    OneSignal.init({
-      appId: "a2d0d7ae-9df3-4dd0-a9d1-35dd8791824d",
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "d1660843-a5a7-46ed-b5be-2545786b88cd",
     });
-
-    // ربط هوية الزبون فور دخوله إذا كان مسجلاً مسبقاً
-    const user = JSON.parse(localStorage.getItem('marketUser'));
-    if (user && user.phone) {
-        OneSignal.setExternalUserId(user.phone);
-    }
   });
 </script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
