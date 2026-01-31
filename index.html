@@ -5,14 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Market Store DZ | المتجر المتكامل</title>
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script>
   window.OneSignalDeferred = window.OneSignalDeferred || [];
   OneSignalDeferred.push(async function(OneSignal) {
     await OneSignal.init({
       appId: "d1660843-a5a7-46ed-b5be-2545786b88cd",
     });
+    
+    // ربط رقم الهاتف بالجهاز تلقائياً عند تسجيل الدخول
+    const user = JSON.parse(localStorage.getItem('marketUser'));
+    if (user && user.phone) {
+        await OneSignal.login(user.phone);
+    }
   });
 </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #0088cc; --bg: #0b0e14; --card: #1a222d; --text: #ffffff; --success: #10b981; }
