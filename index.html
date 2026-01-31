@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Market Store DZ | المتجر المتكامل</title>
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+<script>
+  window.OneSignal = window.OneSignal || [];
+  OneSignal.push(function() {
+    OneSignal.init({
+      appId: "a2d0d7ae-9df3-4dd0-a9d1-35dd8791824d",
+    });
+
+    // ربط هوية الزبون فور دخوله إذا كان مسجلاً مسبقاً
+    const user = JSON.parse(localStorage.getItem('marketUser'));
+    if (user && user.phone) {
+        OneSignal.setExternalUserId(user.phone);
+    }
+  });
+</script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #0088cc; --bg: #0b0e14; --card: #1a222d; --text: #ffffff; --success: #10b981; }
@@ -131,6 +146,11 @@
             if (!name || !phone) return alert("يرجى إكمال بيانات الدخول!");
             localStorage.setItem('marketUser', JSON.stringify({ name, phone }));
             showShop(name);
+            // أضف هذا السطر داخل دالة saveUser بعد حفظ البيانات في localStorage
+OneSignal.push(function() {
+    OneSignal.setExternalUserId(phone);
+});
+            
         }
 
         function showShop(name) {
