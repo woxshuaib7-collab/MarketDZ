@@ -207,7 +207,22 @@
             <button onclick="document.getElementById('orderModal').style.display='none'" style="background:transparent; color:gray; border:none; width:100%; margin-top:10px; cursor:pointer;">إلغاء</button>
         </div>
     </div>
+     <div style="text-align: center; padding: 20px;">
+    <button onclick="openAdmin()" style="background: transparent; border: none; color: #334155; cursor: pointer;">⚙️ الإدارة</button>
+</div>
 
+<div id="adminModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:2000; overflow-y:auto; color:white; padding:20px;">
+    <h2>لوحة تحكم MarketDZ 🛠️</h2>
+    <hr>
+    <h3>إضافة منتج جديد</h3>
+    <input type="text" id="pName" placeholder="اسم المنتج (مثلاً: Free Fire)">
+    <input type="text" id="pPrice" placeholder="السعر (مثلاً: 500 دج)">
+    <input type="text" id="pImg" placeholder="رابط صورة المنتج">
+    <button class="btn" onclick="addNewProduct()">إضافة للمتجر ✅</button>
+    <br>
+    <button onclick="document.getElementById('adminModal').style.display='none'" style="color:red; background:none; border:none; margin-top:20px;">إغلاق اللوحة</button>
+</div>
+    
     <script>
         // إعدادات البوت والـ ID الخاص بك (مربوطة وجاهزة)
         const BOT_TOKEN = '8522676441:AAGvGQztAI9h7my-EBUACjoVtS7nE52xujE';
@@ -299,6 +314,36 @@ OneSignal.push(function() {
                 btn.disabled = false;
             }
         }
+        function openAdmin() {
+    const pass = prompt("أدخل كلمة مرور المسؤول:");
+    if (pass === "1234") { // يمكنك تغيير كلمة المرور هنا
+        document.getElementById('adminModal').style.display = 'block';
+    } else {
+        alert("عذراً، لا تملك صلاحية الوصول!");
+    }
+}
+
+function addNewProduct() {
+    const name = document.getElementById('pName').value;
+    const price = document.getElementById('pPrice').value;
+    const img = document.getElementById('pImg').value;
+
+    if(name && price) {
+        const container = document.querySelector('.container');
+        const newCard = `
+            <div class="card">
+                <img src="${img || 'https://via.placeholder.com/150'}" alt="${name}">
+                <h3>${name}</h3>
+                <p class="price-tag">${price}</p>
+                <button class="btn" onclick="openModal('${name}', '${price}')">اطلب الآن</button>
+            </div>
+        `;
+        container.innerHTML += newCard;
+        alert("تمت إضافة المنتج بنجاح!");
+        document.getElementById('adminModal').style.display = 'none';
+    }
+}
+        
     </script>
 </body>
 </html>
