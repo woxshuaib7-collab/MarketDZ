@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Store DZ | المتجر المتكامل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #0088cc; --bg: #0b0e14; --card: #1a222d; --text: #ffffff; --success: #10b981; }
+        body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; min-height: 100vh; }
+        
+        .page { display: none; padding: 20px; text-align: center; min-height: 100vh; box-sizing: border-box; }
+        .active { display: flex !important; flex-direction: column; align-items: center; justify-content: center; }
+        #shopPage.active { display: block !important; }
+
+        .auth-box { background: var(--card); padding: 30px; border-radius: 20px; width: 100%; max-width: 350px; border: 1px solid var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        input, textarea, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #334155; background: #0b0e14; color: white; box-sizing: border-box; font-family: 'Cairo'; }
+        
+        header { background: var(--card); display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; border-bottom: 2px solid var(--primary); position: sticky; top: 0; z-index: 10; }
+        
+        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: 30px auto; padding: 0 15px; }
+        .card { background: var(--card); padding: 20px; border-radius: 20px; border: 1px solid #2d343f; text-align: center; transition: 0.3s; }
+        .card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        
+        .price-tag { color: var(--success); font-size: 1.4rem; font-weight: bold; display: block; margin: 10px 0; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.2s; }
+        .btn:active { transform: scale(0.98); }
+
+        #orderModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:1000; overflow-y: auto; }
+        .modal-content { background: var(--card); width: 90%; max-width: 450px; margin: 40px auto; padding: 30px; border-radius: 25px; text-align: right; border: 1px solid var(--primary); }
+        .hint { font-size: 0.8rem; color: #94a3b8; margin-top: -5px; margin-bottom: 10px; display: block; }
+    </style>
+</head>
+<body>
+
+    <div id="authPage" class="page">
+        <div class="auth-box">
+            <h1 style="color: var(--primary); margin-bottom: 10px;">Market Store DZ</h1>
+            <p style="margin-bottom: 20px; color: #94a3b8;">أهلاً بك في متجر شعيب الرقمي</p>
+            <input type="text" id="regName" placeholder="الاسم الكامل">
+            <input type="tel" id="regPhone" placeholder="رقم الهاتف">
+            <button class="btn" onclick="saveUser()">دخول للمتجر</button>
+        </div>
+    </div>
+
+    <div id="shopPage" class="page">
+        <header>
+            <span id="userDisp" style="color:var(--primary); font-weight: bold;"></span>
+            <button onclick="logout()" style="background:none; border:none; color:#ef4444; cursor:pointer; font-weight: bold;">خروج</button>
+        </header>
+
+        <div class="container">
+            <div class="card">
+                <h3 style="color: var(--primary);">Gemini AI Plus ✨</h3>
+                <p>اشتراك شهر كامل - حساب خاص ببياناتك</p>
+                <span class="price-tag">800 دج</span>
+                <button class="btn" onclick="openModal('Gemini AI Plus', '800 دج')">اطلب الآن</button>
+            </div>
+
+            <div class="card">
+                <h3 style="color: var(--primary);">eFootball 2026 Coins ⚽</h3>
+                <label>اختر الكمية:</label>
+                <select id="efSelect">
+                    <option value="1040 Coins - 1500 دج">1040 Coins - 1500 دج</option>
+                    <option value="2130 Coins - 3000 دج">2130 Coins - 3000 دج</option>
+                    <option value="3250 Coins - 4400 دج">3250 Coins - 4400 دج</option>
+                    <option value="5700 Coins - 7500 دج">5700 Coins - 7500 دج</option>
+                </select>
+                <button class="btn" onclick="selectAndOpen('efSelect', 'eFootball')">اطلب الآن</button>
+            </div>
+
+            <div class="card">
+                <h3 style="color: var(--primary);">Free Fire Diamonds 💎</h3>
+                <label>اختر العرض:</label>
+                <select id="ffSelect">
+                    <option value="100 Diamonds - 300 دج">100 Diamonds - 300 دج</option>
+                    <option value="530 Diamonds - 1450 دج">530 Diamonds - 1450 دج</option>
+                    <option value="1080 Diamonds - 2800 دج">1080 Diamonds - 2800 دج</option>
+                    <option value="العضوية الشهرية - 2850 دج">العضوية الشهرية - 2850 دج</option>
+                </select>
+                <button class="btn" onclick="selectAndOpen('ffSelect', 'Free Fire')">اطلب الآن</button>
+            </div>
+
+            <div class="card">
+                <h3 style="color: var(--primary);">Netflix Premium 🎬</h3>
+                <p>حساب شاشة واحدة - شهر كامل</p>
+                <span class="price-tag">650 دج</span>
+                <button class="btn" onclick="openModal('Netflix Premium', '650 دج')">اطلب الآن</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="orderModal">
+        <div class="modal-content">
+            <h3 id="mTitle" style="color:var(--primary); margin-top: 0;">تأكيد الطلب</h3>
+            <p id="mPrice" style="color: var(--success); font-weight: bold;"></p>
+            
+            <label>بيانات الحساب المطلوبة:</label>
+            <textarea id="accInfo" rows="4" placeholder="للألعاب: أدخل الـ ID.. للاشتراكات: أدخل الجيميل والباسورد"></textarea>
+            <span class="hint">تأكد من كتابة البيانات بدقة لتفادي التأخير</span>
+
+            <div style="margin-top: 15px;">
+                <label>ارفع صورة وصل الدفع (بريدي موب/CCP):</label>
+                <input type="file" id="receiptImg" accept="image/*" style="margin-top: 5px;">
+            </div>
+
+            <button class="btn" id="sendBtn" onclick="sendToTelegram()" style="margin-top: 20px;">إرسال الطلب للبائع ✅</button>
+            <button class="btn" onclick="document.getElementById('orderModal').style.display='none'" style="background:transparent; color: #94a3b8; margin-top: 10px; border: 1px solid #334155;">إلغاء</button>
+        </div>
+    </div>
+
+    <script>
+        // إعدادات البوت والـ ID الخاص بك (مربوطة وجاهزة)
+        const BOT_TOKEN = '8522676441:AAGvGQztAI9h7my-EBUACjoVtS7nE52xujE';
+        const CHAT_ID = '8082796633';
+
+        let currentProduct = "", currentPrice = "";
+
+        window.onload = () => {
+            const user = localStorage.getItem('marketUser');
+            if (user) {
+                showShop(JSON.parse(user).name);
+            } else {
+                document.getElementById('authPage').classList.add('active');
+            }
+        };
+
+        function saveUser() {
+            const name = document.getElementById('regName').value;
+            const phone = document.getElementById('regPhone').value;
+            if (!name || !phone) return alert("يرجى إكمال بيانات الدخول!");
+            localStorage.setItem('marketUser', JSON.stringify({ name, phone }));
+            showShop(name);
+        }
+
+        function showShop(name) {
+            document.getElementById('authPage').classList.remove('active');
+            document.getElementById('shopPage').classList.add('active');
+            document.getElementById('userDisp').innerText = "مرحباً: " + name;
+        }
+
+        function logout() {
+            localStorage.removeItem('marketUser');
+            location.reload();
+        }
+
+        function selectAndOpen(selectId, category) {
+            const val = document.getElementById(selectId).value;
+            openModal(category + " (" + val + ")", "");
+        }
+
+        function openModal(prod, price) {
+            currentProduct = prod;
+            document.getElementById('mTitle').innerText = prod;
+            document.getElementById('mPrice').innerText = price;
+            document.getElementById('orderModal').style.display = 'block';
+        }
+
+        async function sendToTelegram() {
+            const user = JSON.parse(localStorage.getItem('marketUser'));
+            const info = document.getElementById('accInfo').value;
+            const file = document.getElementById('receiptImg').files[0];
+
+            if (!info || !file) return alert("يرجى كتابة بيانات الحساب ورفع صورة الوصل!");
+
+            const btn = document.getElementById('sendBtn');
+            btn.innerText = "جاري الإرسال...";
+            btn.disabled = true;
+
+            const message = `🚀 *طلب جديد وصلك!* \n\n👤 *الزبون:* ${user.name} \n📞 *الهاتف:* ${user.phone} \n\n🛒 *المنتج:* \n${currentProduct} \n\n🔑 *البيانات:* \n\`${info}\``;
+
+            const fd = new FormData();
+            fd.append('chat_id', CHAT_ID);
+            fd.append('caption', message);
+            fd.append('photo', file);
+            fd.append('parse_mode', 'Markdown');
+
+            try {
+                const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: fd
+                });
+
+                if (res.ok) {
+                    alert("✅ تم إرسال طلبك بنجاح! سيتواصل معك البائع قريباً.");
+                    document.getElementById('orderModal').style.display = 'none';
+                    document.getElementById('accInfo').value = "";
+                    document.getElementById('receiptImg').value = "";
+                } else {
+                    alert("❌ فشل الإرسال، تأكد من تشغيل البوت أولاً.");
+                }
+            } catch (e) {
+                alert("خطأ في الاتصال بالإنترنت.");
+            } finally {
+                btn.innerText = "إرسال الطلب للبائع ✅";
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
