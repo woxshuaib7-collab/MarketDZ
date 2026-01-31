@@ -23,7 +23,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0088cc; --bg: #0b0e14; --card: #1a222d; --text: #ffffff; --success: #10b981; }
+        :root {--primary: #22c55e;--secondary: #3b82f6;--bg-dark: #0f172a;--card-bg: #1e293b;--text-white: #f8fafc;
         body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; min-height: 100vh; }
         
         .page { display: none; padding: 20px; text-align: center; min-height: 100vh; box-sizing: border-box; }
@@ -36,11 +36,36 @@
         header { background: var(--card); display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; border-bottom: 2px solid var(--primary); position: sticky; top: 0; z-index: 10; }
         
         .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: 30px auto; padding: 0 15px; }
-        .card { background: var(--card); padding: 20px; border-radius: 20px; border: 1px solid #2d343f; text-align: center; transition: 0.3s; }
-        .card:hover { border-color: var(--primary); transform: translateY(-5px); }
-        
+.card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 20px;
+    transition: 0.3s ease;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+}
+
         .price-tag { color: var(--success); font-size: 1.4rem; font-weight: bold; display: block; margin: 10px 0; }
-        .btn { background: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.2s; }
+        .btn {
+    background: linear-gradient(135deg, var(--primary), #16a34a);
+    color: white;
+    border-radius: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
         .btn:active { transform: scale(0.98); }
 
         #orderModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:1000; overflow-y: auto; }
